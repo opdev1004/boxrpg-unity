@@ -7,7 +7,6 @@ Opensource box rpg game based on Unity
 # Developers:
 ## General git rules
 * Update(commit and push) every small bit
-* Open issues -> Assign issues -> Close issues
-* Use issues as a task assignment system
+* Use issues as a task assignment system, Open issues -> Assign issues -> Close issues
 * Create new file or open/update issue for update in the file that is being modified by others
 
