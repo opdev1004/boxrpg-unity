@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public List<KeyCode> jumpKey = new List<KeyCode>{ KeyCode.Space, KeyCode.JoystickButton0 };
 
     Rigidbody m_Rigidbody;
+    BoxCollider m_BoxCollider;
     Vector3 m_Movement;
     Quaternion m_Rotation = Quaternion.identity;
     bool isJumping;
@@ -19,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+        m_BoxCollider = GetComponent<BoxCollider>();
         jumpTime = 0f;
     }
 
@@ -42,20 +44,21 @@ public class PlayerMovement : MonoBehaviour
 
             m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * movementSpeed * Time.deltaTime);
 
-            if (Physics.Raycast(m_Rigidbody.position, Vector3.down, 0.55f))
+            if (Physics.Raycast(m_Rigidbody.position, Vector3.down, m_BoxCollider.size.y / 1.95f))
             {
                 m_Rigidbody.MoveRotation(m_Rotation);
             }
         }
 
-        jump();
+        Jump();
     }
 
     //runs every frame
     void Update()
     {
+        
         //check if the player is standing on a solid object
-        if (Physics.Raycast(m_Rigidbody.position, Vector3.down, 0.55f))
+        if (Physics.Raycast(m_Rigidbody.position, Vector3.down, m_BoxCollider.size.y / 1.95f))
         {
             foreach (KeyCode key in jumpKey)
             {
@@ -68,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void jump()
+    void Jump()
     {
         if (isJumping)
         {
