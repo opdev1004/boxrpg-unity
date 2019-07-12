@@ -42,7 +42,11 @@ public class PlayerMovement : MonoBehaviour
 		r = 0.0f;
     }
 
-    // Instead of being called before every rendered frame like Update(), FixedUpdate is called before the physics system solves any collisions and other interactions that have happened.  By default it is called exactly 50 times every second.
+	/**
+	* Instead of being called before every rendered frame like Update(),
+	* FixedUpdate is called before the physics system solves any collisions and other interactions that have happened.
+	* By default it is called exactly 50 times every second.
+	*/
     void FixedUpdate()
     {
 		RotationWithCam();
@@ -116,36 +120,15 @@ public class PlayerMovement : MonoBehaviour
 
 	void Movement(){
 		// get input
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-		Vector3 movement = new Vector3(horizontal, 0f, vertical);
+		Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         movement.Normalize();
-
-		// check if input is happening
-        bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
-        bool hasVerticalInput = !Mathf.Approximately(vertical, 0f);
-        bool isWalking = hasHorizontalInput || hasVerticalInput;
-
-		// do if there's input
-        if (isWalking)
-        {
-			// Calculate the rotated vector value for movement
-			float movementX = movement.x * Mathf.Cos(transform.rotation.y * Mathf.Deg2Rad) - movement.z * Mathf.Sin(transform.rotation.y * Mathf.Deg2Rad);
-			float movementZ = movement.x * Mathf.Sin(transform.rotation.y * Mathf.Deg2Rad) + movement.z * Mathf.Cos(transform.rotation.y * Mathf.Deg2Rad);
-			Vector3 desiredMovement = new Vector3(movementX, movement.y, movementZ);
-            //Vector3 desiredForward = Vector3.RotateTowards(transform.forward, movement, turnSpeed * Time.deltaTime, 0f);
-            //m_Rotation = Quaternion.LookRotation(desiredForward);
-
-            m_Rigidbody.MovePosition(m_Rigidbody.position + desiredMovement * movementSpeed * Time.deltaTime);
-			/*
-            Vector3 desiredForward = Vector3.RotateTowards(transform.forward, movement, turnSpeed * Time.deltaTime, 0f);
-            m_Rotation = Quaternion.LookRotation(desiredForward);
-
-            m_Rigidbody.MovePosition(m_Rigidbody.position + movement * movementSpeed * Time.deltaTime);
-
-            m_Rigidbody.MoveRotation(m_Rotation);
-			*/
-        }
+		// get forward and right vector values
+		Vector3 objForward = transform.forward;
+		Vector3 objRight = transform.right;
+		objForward.Normalize();
+		objRight.Normalize();
+		// move if input is happening.
+		m_Rigidbody.MovePosition(m_Rigidbody.position + objForward * movement.z + objRight * movement.x);	
 	}
 
     //Moves the character up while it is jumping.
