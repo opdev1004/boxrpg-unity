@@ -410,6 +410,21 @@ PrefabInstance:
       propertyPath: cameraObj
       value: 
       objectReference: {fileID: 739011716}
+    - target: {fileID: 1446732469891807829, guid: 456a2856c55dde44bb4c6287455b1ab2,
+        type: 3}
+      propertyPath: movementSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1446732469891807829, guid: 456a2856c55dde44bb4c6287455b1ab2,
+        type: 3}
+      propertyPath: jumpForce
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1446732469891807829, guid: 456a2856c55dde44bb4c6287455b1ab2,
+        type: 3}
+      propertyPath: jumpDuration
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 456a2856c55dde44bb4c6287455b1ab2, type: 3}
 --- !u!1001 &2759745927135709112

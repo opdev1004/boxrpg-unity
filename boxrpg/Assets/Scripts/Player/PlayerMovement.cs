@@ -12,11 +12,11 @@ public class PlayerMovement : MonoBehaviour
 
 	//turn speed in radians per second
     public float turnSpeed = 0f;
-    public float movementSpeed = 8.0f;
+    public float movementSpeed = 1.0f;
 
 	// jumping variables
-	public float jumpDuration = 0.5f;
-	public float jumpForce = 2.0f;
+	public float jumpDuration = 0.2f;
+	public float jumpForce = 8.0f;
 	private List<KeyCode> jumpKey = new List<KeyCode>{ KeyCode.Space, KeyCode.JoystickButton0 };
     bool isJumping;
 
@@ -127,8 +127,11 @@ public class PlayerMovement : MonoBehaviour
 		Vector3 objRight = transform.right;
 		objForward.Normalize();
 		objRight.Normalize();
+		// calculate total movement vector
+		Vector3 objMovement = (objForward * movement.z + objRight * movement.x) * 0.3f * movementSpeed;
 		// move if input is happening.
-		m_Rigidbody.MovePosition(m_Rigidbody.position + objForward * movement.z + objRight * movement.x);	
+		m_Rigidbody.MovePosition(m_Rigidbody.position + objMovement);
+		cameraObj.transform.position = cameraObj.transform.position + objMovement;
 	}
 
     //Moves the character up while it is jumping.
@@ -139,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
             if (jumpDuration > 0)
             {
                 Vector3 jumpVector = new Vector3(0, jumpForce, 0);
-                m_Rigidbody.MovePosition(m_Rigidbody.position + jumpVector * movementSpeed * Time.deltaTime);
+                m_Rigidbody.MovePosition(m_Rigidbody.position + jumpVector * Time.deltaTime);
                 jumpDuration -= Time.deltaTime;
             }
             else
