@@ -6,12 +6,11 @@ public class PlayerMovement : MonoBehaviour
 {
 	//object variables
 	public GameObject cameraObj;
-	Rigidbody camRigidbody;
+	//Rigidbody camRigidbody;
 	Rigidbody m_Rigidbody;
 	BoxCollider m_BoxCollider;
 
 	//turn speed in radians per second
-    public float turnSpeed = 0f;
     public float movementSpeed = 1.0f;
 
 	// jumping variables
@@ -20,26 +19,25 @@ public class PlayerMovement : MonoBehaviour
 	private List<KeyCode> jumpKey = new List<KeyCode>{ KeyCode.Space, KeyCode.JoystickButton0 };
     bool isJumping;
 
-    //Quaternion m_Rotation = Quaternion.identity;
-
 	// camera variables
 	public float camSpeedX = 1.0f;
-	public float camSspeedY = 1.0f;
+	public float camSpeedY = 1.0f;
 	// default offset distance is 5.0f
 	private float offsetDistance = 5.0f;
-	// Angle
-	private float r;
-	// holding player's position to update camera'
-	// private Vector3 previousPlayerPos;
+	// Angle of 2D, X and Z
+	private float rx;
+	// Angle of 3D, 
+	private float ry;
 
 
     // Start is called before the first frame update
     void Start()
     {
-		camRigidbody = cameraObj.GetComponent<Rigidbody>();
+		//camRigidbody = cameraObj.GetComponent<Rigidbody>();
         m_Rigidbody = GetComponent<Rigidbody>();
         m_BoxCollider = GetComponent<BoxCollider>();
-		r = 0.0f;
+		rx = 0.0f;
+		ry = 75.0f;
     }
 
 	/**
@@ -80,15 +78,23 @@ public class PlayerMovement : MonoBehaviour
 	void RotationWithCam(){
 		// store mouse movement input value
 		float mouseX = camSpeedX * Input.GetAxis("Mouse X");
-		// float mouseY = speedW * Input.GetAxis("Mouse Y");
+		float mouseY = camSpeedY * Input.GetAxis("Mouse Y");
 
-		// calculate angle
-		r = r + mouseX;
-		if(r > 360){
-			r = 0.0f;
-		} else if(r < 0) {
-			r = 360.0f;
+		// calculate 2D rotational angle
+		rx = rx + mouseX;
+		ry = ry + mouseY;
+		if(rx > 360){
+			rx = 0.0f;
+		} else if(rx < 0) {
+			rx = 360.0f;
 		}
+		// Limit vertical angle, 0 is where the top and bigger number get closer to ground
+		if(ry > 85){
+			ry = 85.0f;
+		} else if(ry < 5) {
+			ry = 5.0f;
+		}
+
 
 		if(Input.GetAxis("Mouse ScrollWheel") > 0){
 			if(offsetDistance > 1.0f){
@@ -102,14 +108,14 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 		// Change player and camera's rotation
-		Vector3 rotationFactor = new Vector3 (0, r, 0);
+		Vector3 rotationFactor = new Vector3 (0, rx, 0);
 		Quaternion playerRotation = Quaternion.Euler(m_Rigidbody.rotation * rotationFactor);
 		m_Rigidbody.MoveRotation(playerRotation);
 
 		// calculate camera's new position
-		float camPosX = -Mathf.Sin(r * Mathf.Deg2Rad) * offsetDistance;
-		float camPosZ = -Mathf.Cos(r * Mathf.Deg2Rad) * offsetDistance;
-		float camPosY = camRigidbody.position.y;
+		float camPosX = offsetDistance * Mathf.Sin(ry * Mathf.Deg2Rad) * -Mathf.Sin(rx * Mathf.Deg2Rad);
+		float camPosZ = offsetDistance * Mathf.Sin(ry * Mathf.Deg2Rad) * -Mathf.Cos(rx * Mathf.Deg2Rad);
+		float camPosY = offsetDistance * Mathf.Cos(ry * Mathf.Deg2Rad);
 		Vector3 newCamPos = new Vector3 (transform.position.x + camPosX, camPosY, transform.position.z + camPosZ);
 
 		// change the position of camera
@@ -128,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
 		objForward.Normalize();
 		objRight.Normalize();
 		// calculate total movement vector
-		Vector3 objMovement = (objForward * movement.z + objRight * movement.x) * 0.3f * movementSpeed;
+		Vector3 objMovement = (objForward * movement.z + objRight * movement.x) * 0.2f * movementSpeed;
 		// move if input is happening.
 		m_Rigidbody.MovePosition(m_Rigidbody.position + objMovement);
 		cameraObj.transform.position = cameraObj.transform.position + objMovement;
