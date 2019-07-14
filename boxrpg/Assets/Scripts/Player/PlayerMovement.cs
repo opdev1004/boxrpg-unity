@@ -115,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
 		// calculate camera's new position
 		float camPosX = offsetDistance * Mathf.Sin(ry * Mathf.Deg2Rad) * -Mathf.Sin(rx * Mathf.Deg2Rad);
 		float camPosZ = offsetDistance * Mathf.Sin(ry * Mathf.Deg2Rad) * -Mathf.Cos(rx * Mathf.Deg2Rad);
-		float camPosY = offsetDistance * Mathf.Cos(ry * Mathf.Deg2Rad);
+		float camPosY = offsetDistance * Mathf.Cos(ry * Mathf.Deg2Rad) + m_Rigidbody.position.y;
 		Vector3 newCamPos = new Vector3 (transform.position.x + camPosX, camPosY, transform.position.z + camPosZ);
 
 		// change the position of camera
