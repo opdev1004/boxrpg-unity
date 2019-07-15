@@ -7,12 +7,15 @@ public class PlayerStats : MonoBehaviour
 {
     int maxHealth;
     int health;
-    
+
     // Start is called before the first frame update
     void Start()
     {
         maxHealth = 5;
         health = maxHealth;
+
+        //Initialises the hp text display
+        UIHealthBar.instance.SetHpTextDisplay(health, maxHealth);
     }
 
     //adds the specified amount of health
@@ -23,9 +26,12 @@ public class PlayerStats : MonoBehaviour
         if (health < 0)
         {
             health = 0;
+        } else if (health > maxHealth)
+        {
+            health = maxHealth;
         }
 
-        UIHealthBar.instance.SetValue(health / (float)maxHealth);
+        UIHealthBar.instance.SetValue(health, maxHealth);
         Debug.Log("Health set to " + health);
     }
 }

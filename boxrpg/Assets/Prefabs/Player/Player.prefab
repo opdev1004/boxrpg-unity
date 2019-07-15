@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1446732469891807829}
   - component: {fileID: 7252405074257142231}
   - component: {fileID: 394844529481098354}
+  - component: {fileID: 1134975712}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -107,12 +108,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraObj: {fileID: 0}
-  turnSpeed: 20
   movementSpeed: 1
   jumpDuration: 0.2
   jumpForce: 8
   camSpeedX: 1
-  camSspeedY: 1
+  camSpeedY: 1
 --- !u!54 &7252405074257142231
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -143,3 +143,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileObj: {fileID: 7375072324236879791, guid: 2425eb2c73655c048a5ed18bb12522e9,
     type: 3}
+--- !u!114 &1134975712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8036103437561983154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98934d6d8787ee24781ec1efa1d2bced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
