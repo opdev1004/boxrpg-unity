@@ -9,11 +9,13 @@ public class PlayerSkills : MonoBehaviour
 
     //Activates Projectile skill when pressing Z on the keyboard or X on the Gamepad.
     private List<KeyCode> projectileSkillKey = new List<KeyCode> { KeyCode.Z, KeyCode.JoystickButton2 };
+    private PlayerStats stats;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        stats = GetComponent<PlayerStats>();
     }
 
     // Update is called once per frame
@@ -27,6 +29,12 @@ public class PlayerSkills : MonoBehaviour
                 FireProjectile(900);
             }
         }
+
+        //test code
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            DamageTest();
+        }
     }
 
     //Fires a projectile at at the specified speed.
@@ -37,5 +45,11 @@ public class PlayerSkills : MonoBehaviour
 
         Projectile projectile = projectileObject.GetComponent<Projectile>();
         projectile.Launch(Vector3.forward, force);
+    }
+
+    //Test method for player health
+    void DamageTest()
+    {
+        stats.AddHealth(-1);
     }
 }
