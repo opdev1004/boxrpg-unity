@@ -24,13 +24,15 @@ public class UIHealthBar : MonoBehaviour
         originalSize = remainingHealth.rectTransform.rect.width;
     }
 
+    //set the size of the reamining health bar compared to max health
     public void SetValue(int currentHealth, int maxHealth)
     {
         remainingHealth.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize * (currentHealth/(float)maxHealth));
-        SetHpTextDisplay(currentHealth, maxHealth);
+        SetTextDisplay(currentHealth, maxHealth);
     }
 
-    public void SetHpTextDisplay(int currentHealth, int maxHealth)
+    //Sets the text to display on the health bar.
+    public void SetTextDisplay(int currentHealth, int maxHealth)
     {
         hpTextDisplay.text = currentHealth + " / " + maxHealth;
     }

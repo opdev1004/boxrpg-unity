@@ -30,11 +30,11 @@ public class PlayerSkills : MonoBehaviour
             }
         }
 
-        //test code
+        /*test code
         if (Input.GetKeyDown(KeyCode.T))
         {
-            DamageTest();
-        }
+            stats.AddHealth(-1);
+        }*/
     }
 
     //Fires a projectile at at the specified speed.
@@ -45,11 +45,5 @@ public class PlayerSkills : MonoBehaviour
 
         Projectile projectile = projectileObject.GetComponent<Projectile>();
         projectile.Launch(Vector3.forward, force, stats.damageModifier);
-    }
-
-    //Test method for player health
-    void DamageTest()
-    {
-        stats.AddHealth(-1);
     }
 }

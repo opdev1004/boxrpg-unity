@@ -19,10 +19,9 @@ public class EnemyStats : MonoBehaviour
     {
         health += amount;
 
-        if (health <= 0)
+        if (health < 0)
         {
-            Debug.Log("Enemy " + gameObject.name + " was defeated.");
-            Destroy(gameObject);
+            health = 0;
         }
         else if (health > maxHealth)
         {

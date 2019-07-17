@@ -18,7 +18,7 @@ public class PlayerStats : MonoBehaviour
         damageModifier = 1;
 
         //Initialises the hp text display
-        UIHealthBar.instance.SetHpTextDisplay(health, maxHealth);
+        UIHealthBar.instance.SetTextDisplay(health, maxHealth);
     }
 
     //adds the specified amount of health

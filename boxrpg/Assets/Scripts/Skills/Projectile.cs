@@ -38,6 +38,7 @@ public class Projectile : MonoBehaviour
         {
             EnemyStats enemyStats = collision.gameObject.GetComponent<EnemyStats>();
 
+            //deal damage to enemies with stats.
             if (enemyStats != null)
             {
                 enemyStats.AddHealth(-damageModifier);
