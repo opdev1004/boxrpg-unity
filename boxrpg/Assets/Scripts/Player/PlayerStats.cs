@@ -5,6 +5,8 @@ using UnityEngine;
 //This class handles storing and changing player stats
 public class PlayerStats : MonoBehaviour
 {
+    public int damageModifier {get; private set;} //damage dealt by skills
+
     int maxHealth;
     int health;
 
@@ -13,6 +15,7 @@ public class PlayerStats : MonoBehaviour
     {
         maxHealth = 5;
         health = maxHealth;
+        damageModifier = 1;
 
         //Initialises the hp text display
         UIHealthBar.instance.SetHpTextDisplay(health, maxHealth);

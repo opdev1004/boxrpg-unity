@@ -7,12 +7,14 @@ public class Projectile : MonoBehaviour
     Rigidbody rigidbody;
 
     float projectileLiveTime; //time until projectile is destroyed.
+    int damageModifier;
 
     //Contrary to Start, Awake is called immediately when the object is created (when Instantiate is called), so rigidbody is properly initialized before being used.
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
         projectileLiveTime = 1.0f;
+        damageModifier = 0;
     }
 
     //runs every frame
@@ -32,13 +34,23 @@ public class Projectile : MonoBehaviour
     //Action to take on collision with an object
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Projectile Collision with " + collision.gameObject);
+        if (damageModifier != 0)
+        {
+            EnemyStats enemyStats = collision.gameObject.GetComponent<EnemyStats>();
+
+            if (enemyStats != null)
+            {
+                enemyStats.AddHealth(-damageModifier);
+                Debug.Log("Projectile Collision with " + collision.gameObject + " for " + damageModifier + " damage.");
+            }
+        }
         Destroy(gameObject);
     }
  
-    //Moves the projectile at the specified speed and direction.
-    public void Launch(Vector3 direction, float force)
+    //Moves the projectile at the specified speed, direction, and power.
+    public void Launch(Vector3 direction, float force, int power)
     {
+        damageModifier = power;
         rigidbody.AddForce(direction * force);
     }
 }

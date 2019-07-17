@@ -44,7 +44,7 @@ public class PlayerSkills : MonoBehaviour
         GameObject projectileObject = Instantiate(projectileObj, rigidbody.position + Vector3.forward, Quaternion.identity);
 
         Projectile projectile = projectileObject.GetComponent<Projectile>();
-        projectile.Launch(Vector3.forward, force);
+        projectile.Launch(Vector3.forward, force, stats.damageModifier);
     }
 
     //Test method for player health
